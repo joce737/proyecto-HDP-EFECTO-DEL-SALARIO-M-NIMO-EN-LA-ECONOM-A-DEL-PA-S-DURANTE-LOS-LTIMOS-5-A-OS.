@@ -137,16 +137,19 @@ main p {
     margin: 20px 0;
 }
 
-button-link {
-    background-color: #ff0;
-    color: #000;
+.button-link {
+    display: inline-block;
     padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-    font-size: 1em;
-    font-weight: bold;
-    margin-top: 20px;
-    border-radius: 10px; /* Agrega bordes redondos de 10px */
+    background-color: yellow; /* Cambiar el color de fondo a amarillo */
+    color: black; /* Cambiar el color del texto a negro */
+    text-decoration: none; /* Quitar subrayado del texto */
+    border: 2px solid black; /* Añadir borde negro */
+    border-radius: 5px; /* Añadir esquinas redondeadas */
+}
+
+.button-link:hover {
+    background-color: #ffd700; /* Cambiar el color de fondo a amarillo claro al pasar el cursor */
+    color: black; /* Mantener el color del texto negro al pasar el cursor */
 }
 
 footer {
