@@ -10,3 +10,4 @@ CREATE TABLE Consultas (
     comentario NVARCHAR(MAX) NOT NULL,
     fecha_envio DATETIME DEFAULT GETDATE()
 );
+

@@ -12,10 +12,10 @@
         <p>para recibir información futura y relevante del tema puedes suscribirte</p>
         <div class="contact-section">
             <div class="contact-info">
-                <h2>Utiliza las siguientes vías de contacto,<bar> o rellena el formulario.</h2>
+                <h2>Utiliza las siguientes vías de contacto,<br> o rellena el formulario.</h2>
                 <p>Vía E-mail</p>
                 <a href="mailto:Di21001@ues.edu.sv">Di21001@ues.edu.sv</a><br>
-                <a href="mailto:Cm21010@ues.edu.sv">Cm21010@ues.edu.sv</a><br>
+                <a href="mailto:Cm21010@ues.edu.sv">Cm2101@ues.edu.sv</a><br>
                 <a href="mailto:Oscar.diaz3@ues.edu.sv">Oscar.diaz3@ues.edu.sv</a>
                 <p>En nuestras redes sociales</p>
                 <a href="#">Di21001@ues.edu.sv</a><br>
@@ -25,48 +25,19 @@
                 <p>7940-7422</p>
             </div>
             <div class="contact-form">
-                <form id="contactForm">
-                    <input type="text" name="nombre" placeholder="Escribe tu nombre" required>
-                    <input type="email" name="correo_electronico" placeholder="Escribe tu e-mail" required>
-                    <input type="text" name="telefono" placeholder="Escribe tu teléfono (Opcional)">
-                    <textarea name="comentario" placeholder="Escribe tu mensaje" required></textarea>
-                    <button type="submit">ENVIAR MENSAJE</button>
-                </form>
+                <input type="text" placeholder="Escribe tu nombre" id="name">
+                <input type="email" placeholder="Escribe tu e-mail" id="email">
+                <input type="text" placeholder="Escribe tu teléfono (Opcional)" id="phone">
+                <textarea placeholder="Escribe tu mensaje" id="message"></textarea>
+                <button onclick="sendMessage()">ENVIAR MENSAJE</button>
                 <p id="success-message" style="color: #ffc107; display: none;">Mensaje enviado correctamente.</p>
                 <button onclick="goToInicio()">INICIO</button>
+                <button onclick="fetchConsultas()">Consultar Base de Datos</button>
+                <div id="consulta-result"></div>
             </div>
         </div>
     </div>
-    <script>
-        document.getElementById('contactForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const formData = new FormData(event.target);
-            const data = {};
-            formData.forEach((value, key) => {
-                data[key] = value;
-            });
-
-            fetch('/enviar-consulta', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            })
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('success-message').style.display = 'block';
-                setTimeout(() => {
-                    window.location.href = 'mensaje_exito.html'; // Redirigir a mensaje de éxito
-                }, 2000); // Esperar 2 segundos antes de redirigir
-            })
-            .catch(error => console.error('Error:', error));
-        });
-
-        function goToInicio() {
-            window.location.href = '../archivoshtml/parte1.html';
-        }
-    </script>
+    <script src="../archivosjs/contactanos.js"></script>
 </body>
 </html>
 

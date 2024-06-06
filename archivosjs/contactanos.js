@@ -32,9 +32,9 @@ function sendMessage() {
             // Mostrar el mensaje de éxito
             document.getElementById('success-message').style.display = 'block';
             
-            // Redirigir a la página de éxito después de 2 segundos
+            // Ocultar el mensaje de éxito después de 2 segundos
             setTimeout(() => {
-                window.location.href = 'mensaje_exito.html'; // Cambia esta ruta si es necesario
+                document.getElementById('success-message').style.display = 'none';
             }, 2000);
         })
         .catch(error => console.error('Error:', error));
@@ -44,5 +44,38 @@ function sendMessage() {
 }
 
 function goToInicio() {
-    window.location.href = "index.html"; // Cambia esta ruta si es necesario
+    window.location.href = "../archivoshtml/parte1.html"; // Cambia esta ruta si es necesario
+}
+
+// Función para consultar la base de datos y mostrar los resultados
+function fetchConsultas() {
+    fetch('/consultar-consultas')
+    .then(response => response.json())
+    .then(data => {
+        const resultDiv = document.getElementById('consulta-result');
+        resultDiv.innerHTML = ''; // Limpiar resultados anteriores
+        if (data.length > 0) {
+            const table = document.createElement('table');
+            const header = table.insertRow();
+            header.insertCell().innerText = 'Nombre';
+            header.insertCell().innerText = 'Correo Electrónico';
+            header.insertCell().innerText = 'Teléfono';
+            header.insertCell().innerText = 'Comentario';
+            header.insertCell().innerText = 'Fecha Envío';
+
+            data.forEach(consulta => {
+                const row = table.insertRow();
+                row.insertCell().innerText = consulta.nombre;
+                row.insertCell().innerText = consulta.correo_electronico;
+                row.insertCell().innerText = consulta.telefono;
+                row.insertCell().innerText = consulta.comentario;
+                row.insertCell().innerText = consulta.fecha_envio;
+            });
+
+            resultDiv.appendChild(table);
+        } else {
+            resultDiv.innerText = 'No hay consultas registradas.';
+        }
+    })
+    .catch(error => console.error('Error:', error));
 }
