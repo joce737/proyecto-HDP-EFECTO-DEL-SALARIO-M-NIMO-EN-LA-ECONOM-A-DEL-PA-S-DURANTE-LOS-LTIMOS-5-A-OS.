@@ -10,7 +10,7 @@ const config = {
     user: 'tu_usuario',
     password: 'tu_contraseña',
     server: 'localhost',
-    database: 'tu_base_de_datos',
+    database: 'PAIS_DUERANTE_LOS_ULTIMOS_5_A_OS',
     options: {
         encrypt: true, // Use this if you're on Windows Azure
         trustServerCertificate: true // Change to true for local dev / self-signed certs
