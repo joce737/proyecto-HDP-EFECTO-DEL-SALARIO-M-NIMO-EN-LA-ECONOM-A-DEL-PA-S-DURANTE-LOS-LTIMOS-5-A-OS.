@@ -65,6 +65,7 @@ body {
     align-self: flex-start;
     transition: background-color 0.3s ease;
 }
+
 button {
     background-color: #ff0;
     color: #000;
@@ -78,7 +79,6 @@ button {
     margin-top: 20px;
 }
 
-
 .contact-form button:hover {
     background-color: #e0a800;
 }
@@ -86,4 +86,6 @@ button {
 #success-message {
     margin-top: 10px;
     display: none;
+    color: #28a745; /* Cambiado a verde para mejor visibilidad */
 }
+
