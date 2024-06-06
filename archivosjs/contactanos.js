@@ -1,11 +1,13 @@
 function sendMessage() {
+    // Obtener los valores de los campos del formulario por sus IDs
     const name = document.getElementById('name').value;
     const email = document.getElementById('email').value;
     const phone = document.getElementById('phone').value;
     const message = document.getElementById('message').value;
 
+    // Verificar que los campos obligatorios (nombre, correo electrónico y mensaje) no estén vacíos
     if (name && email && message) {
-        // Crear objeto con los datos del formulario
+        // Crear un objeto con los datos del formulario
         const data = {
             nombre: name,
             correo_electronico: email,
@@ -13,32 +15,38 @@ function sendMessage() {
             comentario: message
         };
 
-        // Enviar datos al servidor usando fetch
+        // Enviar los datos al servidor utilizando la API Fetch con método POST
         fetch('/enviar-consulta', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json' // Indicar que los datos se envían en formato JSON
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify(data) // Convertir el objeto data a una cadena JSON
         })
-        .then(response => response.text())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error en la respuesta del servidor');
+            }
+            return response.text();
+        })
         .then(data => {
-            // Limpiar los campos del formulario
+            // Limpiar los campos del formulario después de enviar los datos
             document.getElementById('name').value = '';
             document.getElementById('email').value = '';
             document.getElementById('phone').value = '';
             document.getElementById('message').value = '';
 
-            // Mostrar el mensaje de éxito
+            // Mostrar un mensaje de éxito
             document.getElementById('success-message').style.display = 'block';
-            
-            // Ocultar el mensaje de éxito después de 2 segundos
+
+            // Ocultar el mensaje de éxito después de 10 segundos
             setTimeout(() => {
                 document.getElementById('success-message').style.display = 'none';
-            }, 2000);
+            }, 10000);
         })
-        .catch(error => console.error('Error:', error));
+        .catch(error => console.error('Error:', error)); // Manejar cualquier error que ocurra durante el fetch
     } else {
+        // Mostrar una alerta si los campos obligatorios no están completos
         alert('Por favor, rellena todos los campos obligatorios.');
     }
 }
@@ -49,10 +57,10 @@ function goToInicio() {
 
 // Función para consultar la base de datos y mostrar los resultados
 function fetchConsultas() {
-    fetch('/consultar-consultas')
+    fetch('../archivoshtml/datosdebase.html')
     .then(response => response.json())
     .then(data => {
-        const resultDiv = document.getElementById('consulta-result');
+        const resultDiv = document.getElementById('consulta-resultados'); // Asegúrate de que este ID coincida con tu HTML
         resultDiv.innerHTML = ''; // Limpiar resultados anteriores
         if (data.length > 0) {
             const table = document.createElement('table');

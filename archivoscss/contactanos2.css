@@ -83,9 +83,9 @@ button {
     background-color: #e0a800;
 }
 
-#success-message {
+success-message {
     margin-top: 10px;
     display: none;
-    color: #28a745; /* Cambiado a verde para mejor visibilidad */
+    color:  #e0a800; /* Cambiado a verde para mejor visibilidad */
 }
 
