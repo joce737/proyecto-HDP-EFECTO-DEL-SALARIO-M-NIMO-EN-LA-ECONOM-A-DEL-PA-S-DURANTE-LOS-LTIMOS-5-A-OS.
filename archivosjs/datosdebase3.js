@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    fetch('/archivoshtml/datosdebase.html')
+    fetch('/consultar-consultas')
     .then(response => response.json())
     .then(data => {
         const tbody = document.querySelector('#consultas-table tbody');
@@ -25,7 +25,3 @@ document.addEventListener('DOMContentLoaded', () => {
     })
     .catch(error => console.error('Error:', error));
 });
-
-function goToInicio() {
-    window.location.href = "../archivoshtml/parte1.html";
-}
