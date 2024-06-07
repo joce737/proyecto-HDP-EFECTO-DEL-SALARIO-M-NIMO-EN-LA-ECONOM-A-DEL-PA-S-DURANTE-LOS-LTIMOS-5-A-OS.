@@ -13,7 +13,7 @@ const config = {
     user: 'tu_usuario',
     password: 'tu_contraseña',
     server: 'localhost',
-    database: '../dasededatos/proyecto_HDP_EFECTO_DEL_SALARIO_MINIMO',
+    database: 'proyecto_HDP_EFECTO_DEL_SALARIO_MINIMO',
     options: {
         encrypt: true, // Usar esto si estás en Azure
         trustServerCertificate: true // Cambiar a true para certificados autofirmados o desarrollo local
@@ -22,9 +22,8 @@ const config = {
 
 // Ruta para manejar el envío del formulario
 app.post('/enviar-formulario', (req, res) => {
-    const { nombre, correo, telefono, mensaje } = req.body;
+    const { nombre, correo_electronico, telefono, comentario } = req.body;
 
-    // Conexión a la base de datos y ejecución de la consulta SQL para insertar los datos del formulario
     sql.connect(config, err => {
         if (err) {
             console.error('Error de conexión:', err);
@@ -33,12 +32,12 @@ app.post('/enviar-formulario', (req, res) => {
         }
 
         const request = new sql.Request();
-        const query = `INSERT INTO Formulario (nombre, correo, telefono, mensaje) VALUES (@nombre, @correo, @telefono, @mensaje)`;
+        const query = `INSERT INTO Consultas (nombre, correo_electronico, telefono, comentario) VALUES (@nombre, @correo_electronico, @telefono, @comentario)`;
 
         request.input('nombre', sql.NVarChar, nombre);
-        request.input('correo', sql.NVarChar, correo);
+        request.input('correo_electronico', sql.NVarChar, correo_electronico);
         request.input('telefono', sql.NVarChar, telefono);
-        request.input('mensaje', sql.NVarChar, mensaje);
+        request.input('comentario', sql.NVarChar, comentario);
 
         request.query(query, (err, result) => {
             if (err) {
@@ -46,7 +45,29 @@ app.post('/enviar-formulario', (req, res) => {
                 res.status(500).send('Error al insertar datos en la base de datos');
                 return;
             }
+            console.log('Datos insertados correctamente:', result);
             res.send('Datos insertados correctamente en la base de datos');
+        });
+    });
+});
+
+// Ruta para consultar las consultas
+app.get('/consultar-consultas', (req, res) => {
+    sql.connect(config, err => {
+        if (err) {
+            console.error('Error de conexión:', err);
+            res.status(500).send('Error de conexión a la base de datos');
+            return;
+        }
+
+        const request = new sql.Request();
+        request.query('SELECT * FROM Consultas ORDER BY nombre', (err, result) => {
+            if (err) {
+                console.error('Error al consultar datos:', err);
+                res.status(500).send('Error al consultar datos en la base de datos');
+                return;
+            }
+            res.json(result.recordset);
         });
     });
 });
