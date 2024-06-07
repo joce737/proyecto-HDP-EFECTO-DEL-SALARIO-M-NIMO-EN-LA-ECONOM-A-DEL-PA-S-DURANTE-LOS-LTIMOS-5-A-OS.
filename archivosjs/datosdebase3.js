@@ -6,6 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
         tbody.innerHTML = '';
 
         if (data.length > 0) {
+            data.sort((a, b) => a.nombre.localeCompare(b.nombre)); // Ordenar por nombre
+
             data.forEach(consulta => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
@@ -25,3 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
     })
     .catch(error => console.error('Error:', error));
 });
+function goToInicio() {
+    window.location.href = "../archivoshtml/parte1.html";
+}
