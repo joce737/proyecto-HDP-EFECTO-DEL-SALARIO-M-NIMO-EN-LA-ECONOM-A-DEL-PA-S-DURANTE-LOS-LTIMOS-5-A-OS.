@@ -1,6 +1,17 @@
 {
+  "name": "proyecto-hdp",
+  "version": "1.0.0",
+  "description": "Proyecto HDP Efecto del Salario Minimo",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "Tu Nombre",
+  "license": "ISC",
   "dependencies": {
     "body-parser": "^1.20.2",
-    "mssql": "^10.0.2"
-  }
+    "express": "^4.19.2",
+    "mssql": "^6.4.1"
+  },
+  "keywords": []
 }
