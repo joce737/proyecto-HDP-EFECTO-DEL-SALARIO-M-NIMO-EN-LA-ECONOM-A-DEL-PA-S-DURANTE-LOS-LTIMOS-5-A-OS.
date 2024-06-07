@@ -29,4 +29,4 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 function goToInicio() {
     window.location.href = "../archivoshtml/parte1.html";
-}
+} 
