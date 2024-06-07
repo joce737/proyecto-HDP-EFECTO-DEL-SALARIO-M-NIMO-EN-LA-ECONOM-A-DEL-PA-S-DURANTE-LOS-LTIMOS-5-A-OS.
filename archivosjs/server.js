@@ -13,7 +13,7 @@ const config = {
     user: 'tu_usuario',
     password: 'tu_contraseña',
     server: 'localhost',
-    database: '../dasededatos/proyecto_HDP_EFECTO_DEL_SALARIO_MINIMO_EN_LA_ECONOMIA_DEL_PAIS_DUERANTE_LOS_ULTIMOS_5_A_OS.sql',
+    database: '../dasededatos/proyecto_HDP_EFECTO_DEL_SALARIO_MINIMO',
     options: {
         encrypt: true, // Usar esto si estás en Azure
         trustServerCertificate: true // Cambiar a true para certificados autofirmados o desarrollo local
