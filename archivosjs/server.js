@@ -4,30 +4,66 @@ const sql = require('mssql');
 const app = express();
 const port = 3000;
 
-// Configuración de body-parser para manejar datos de formularios
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-// Configuración de la conexión a la base de datos
 const config = {
     user: 'tu_usuario',
     password: 'tu_contraseña',
     server: 'localhost',
     database: 'proyecto_HDP_EFECTO_DEL_SALARIO_MINIMO',
     options: {
-        encrypt: true, // Usar esto si estás en Azure
-        trustServerCertificate: true // Cambiar a true para certificados autofirmados o desarrollo local
+        encrypt: true,
+        trustServerCertificate: true
     }
 };
 
-// Ruta para manejar el envío del formulario
+const createDatabaseAndTable = async () => {
+    try {
+        await sql.connect(config);
+        const request = new sql.Request();
+
+        const createDbQuery = `
+            IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = 'proyecto_HDP_EFECTO_DEL_SALARIO_MINIMO')
+            BEGIN
+                CREATE DATABASE proyecto_HDP_EFECTO_DEL_SALARIO_MINIMO
+            END
+        `;
+        await request.query(createDbQuery);
+
+        const useDbQuery = `
+            USE proyecto_HDP_EFECTO_DEL_SALARIO_MINIMO
+        `;
+        await request.query(useDbQuery);
+
+        const createTableQuery = `
+            IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'Consultas')
+            BEGIN
+                CREATE TABLE Consultas (
+                    id INT IDENTITY(1,1) PRIMARY KEY,
+                    nombre NVARCHAR(100) NOT NULL,
+                    correo_electronico NVARCHAR(100) NOT NULL,
+                    telefono NVARCHAR(15),
+                    comentario NVARCHAR(MAX) NOT NULL,
+                    fecha_envio DATETIME DEFAULT GETDATE()
+                )
+            END
+        `;
+        await request.query(createTableQuery);
+
+        console.log('Base de datos y tabla creadas correctamente');
+    } catch (err) {
+        console.error('Error al crear la base de datos o la tabla:', err);
+    }
+};
+
 app.post('/enviar-formulario', (req, res) => {
     const { nombre, correo_electronico, telefono, comentario } = req.body;
 
     sql.connect(config, err => {
         if (err) {
             console.error('Error de conexión:', err);
-            res.status(500).send('Error de conexión a la base de datos');
+            res.status(500).json({ message: 'Error de conexión a la base de datos' });
             return;
         }
 
@@ -42,21 +78,19 @@ app.post('/enviar-formulario', (req, res) => {
         request.query(query, (err, result) => {
             if (err) {
                 console.error('Error al insertar datos:', err);
-                res.status(500).send('Error al insertar datos en la base de datos');
+                res.status(500).json({ message: 'Error al insertar datos en la base de datos' });
                 return;
             }
-            console.log('Datos insertados correctamente:', result);
-            res.send('Datos insertados correctamente en la base de datos');
+            res.json({ message: 'Datos insertados correctamente en la base de datos' });
         });
     });
 });
 
-// Ruta para consultar las consultas
 app.get('/consultar-consultas', (req, res) => {
     sql.connect(config, err => {
         if (err) {
             console.error('Error de conexión:', err);
-            res.status(500).send('Error de conexión a la base de datos');
+            res.status(500).json({ message: 'Error de conexión a la base de datos' });
             return;
         }
 
@@ -64,7 +98,7 @@ app.get('/consultar-consultas', (req, res) => {
         request.query('SELECT * FROM Consultas ORDER BY nombre', (err, result) => {
             if (err) {
                 console.error('Error al consultar datos:', err);
-                res.status(500).send('Error al consultar datos en la base de datos');
+                res.status(500).json({ message: 'Error al consultar datos en la base de datos' });
                 return;
             }
             res.json(result.recordset);
@@ -72,7 +106,7 @@ app.get('/consultar-consultas', (req, res) => {
     });
 });
 
-// Iniciar el servidor
 app.listen(port, () => {
+    createDatabaseAndTable(); // Crear base de datos y tabla al iniciar el servidor
     console.log(`Servidor corriendo en http://localhost:${port}`);
 });

@@ -9,7 +9,7 @@
 <body>
     <div class="container">
         <h1>Contacto</h1>
-        <p>para recibir información futura y relevante del tema puedes suscribirte</p>
+        <p>Para recibir información futura y relevante del tema puedes suscribirte</p>
         <div class="contact-section">
             <div class="contact-info">
                 <h2>Utiliza las siguientes vías de contacto,<br> o rellena el formulario.</h2>
@@ -25,12 +25,14 @@
                 <p>7940-7422</p>
             </div>
             <div class="contact-form">
-                <input type="text" placeholder="Escribe tu nombre" id="name">
-                <input type="email" placeholder="Escribe tu e-mail" id="email">
-                <input type="text" placeholder="Escribe tu teléfono (Opcional)" id="phone">
-                <textarea placeholder="Escribe tu mensaje" id="message"></textarea>
-                <button onclick="sendMessage()">ENVIAR MENSAJE</button>
-                <p id="success-message" style="color: #ffc107; display: none; ">Mensaje enviado correctamente.</p>
+                <form id="contactForm">
+                    <input type="text" placeholder="Escribe tu nombre" id="name" required>
+                    <input type="email" placeholder="Escribe tu e-mail" id="email" required>
+                    <input type="text" placeholder="Escribe tu teléfono (Opcional)" id="phone">
+                    <textarea placeholder="Escribe tu mensaje" id="message" required></textarea>
+                    <button type="submit">ENVIAR MENSAJE</button>
+                    <p id="success-message" style="color: #ffc107; display: none;">Mensaje enviado correctamente.</p>
+                </form>
                 <button onclick="goToInicio()">INICIO</button>
                 <button onclick="fetchConsultas()">Consultar Base de Datos</button>
                 <div id="consulta-resultados"></div>

@@ -1,4 +1,8 @@
-function sendMessage() {
+document.getElementById('contactForm').addEventListener('submit', sendMessage);
+
+function sendMessage(event) {
+    event.preventDefault(); // Prevenir el comportamiento predeterminado del formulario
+
     const name = document.getElementById('name').value;
     const email = document.getElementById('email').value;
     const phone = document.getElementById('phone').value;
@@ -23,16 +27,19 @@ function sendMessage() {
             if (!response.ok) {
                 throw new Error('Error en la respuesta del servidor');
             }
-            return response.text();
+            return response.json();
         })
-        .then(data => {
+        .then(() => {
+            // Reset form fields
             document.getElementById('name').value = '';
             document.getElementById('email').value = '';
             document.getElementById('phone').value = '';
             document.getElementById('message').value = '';
 
+            // Show success message
             document.getElementById('success-message').style.display = 'block';
 
+            // Hide success message after 10 seconds
             setTimeout(() => {
                 document.getElementById('success-message').style.display = 'none';
             }, 10000);
@@ -80,11 +87,8 @@ function fetchConsultas() {
         } else {
             resultDiv.innerText = 'No hay consultas registradas.';
         }
+        // Redirigir a la página de resultados después de mostrar los datos
+        window.location.replace("../archivoshtml/datosdebase.html");
     })
     .catch(error => console.error('Error:', error));
-    window.location.href = "../archivoshtml/datosdebase.html";
-}
-function fetchConsultas(){
-    window.location.href = "../archivoshtml/datosdebase.html";
-
 }
