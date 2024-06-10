@@ -51,7 +51,7 @@ function sendMessage(event) {
 }
 
 function goToInicio() {
-    window.location.href = "../archivoshtml/parte1.html";
+    window.location.href = "../index.html";
 }
 
 // Función para consultar la base de datos y mostrar los resultados
@@ -90,9 +90,10 @@ function fetchConsultas() {
       })
       .then(() => {
         // Redirigir a la página de resultados después de mostrar los datos
-        setTimeout(() => {
-          window.location.replace("../archivoshtml/datosdebase.html");
-        }, 1000); // wait 1 second before redirecting
       })
       .catch(error => console.error('Error:', error));
   }
+
+  function fetchConsultas() {
+    window.location.href = "../archivoshtml/datosdebase.html";
+}

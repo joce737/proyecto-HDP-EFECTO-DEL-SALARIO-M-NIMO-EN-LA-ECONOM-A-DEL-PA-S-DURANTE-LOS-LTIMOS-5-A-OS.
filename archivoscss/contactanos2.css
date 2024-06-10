@@ -83,9 +83,30 @@ button {
     background-color: #e0a800;
 }
 
-success-message {
-    margin-top: 10px;
+#success-message {
+    color: #ffc107;
     display: none;
-    color:  #e0a800; /* Cambiado a verde para mejor visibilidad */
+    margin-top: 10px;
 }
 
+#consulta-resultados {
+    margin-top: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}

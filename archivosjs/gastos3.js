@@ -1,5 +1,5 @@
 function goToInicio() {
-    window.location.href = "../archivoshtml/parte1.html"; // Cambia esta ruta si es necesario
+    window.location.href = "../index.html"; // Cambia esta ruta si es necesario
 }
 
 function contactUs() {
